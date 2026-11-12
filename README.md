@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PoliStore
 
-## Getting Started
+Tienda virtual de ropa deportiva universitaria. Proyecto universitario en equipo.
 
-First, run the development server:
+**Stack:** Next.js (App Router) + TypeScript + Tailwind CSS + Drizzle ORM + SQLite (libSQL/Turso). Despliegue en Vercel.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Paleta de colores
+
+| Uso          | Color     | Clase Tailwind     |
+| ------------ | --------- | ------------------ |
+| Principal    | `#0f385a` | `bg-primary`       |
+| Secundario 1 | `#3db2de` | `bg-secondary`     |
+| Secundario 2 | Blanco    | `bg-white`         |
+
+Definidos en `src/app/globals.css`.
+
+## Estructura
+
+```
+src/
+  app/             Rutas y páginas (App Router). Las rutas de API van en app/api
+  components/
+    ui/            Componentes genéricos (botón, input, tarjeta)
+    layout/        Header, footer, navegación
+    products/      Componentes propios del catálogo
+  db/
+    schema.ts      Tablas (Drizzle)
+    index.ts       Conexión a la base de datos
+    migrations/    Migraciones generadas
+  services/        Lógica de negocio y consultas (ej. products.ts)
+  lib/             Utilidades y constantes
+  types/           Tipos compartidos
+data/              Base SQLite local (ignorada por git)
+public/images/     Imágenes estáticas
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Regla simple: las páginas llaman a `services/`, y `services/` es la única capa que usa `db/`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## SQLite en Vercel
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+El disco de Vercel es de solo lectura/efímero, así que un archivo `.db` no persiste en producción.
+Por eso usamos **libSQL**: mismo SQLite, pero con un servidor remoto gratuito ([Turso](https://turso.tech)).
 
-## Learn More
+- Local: `DATABASE_URL=file:data/local.db` (archivo SQLite normal).
+- Producción: `DATABASE_URL` y `DATABASE_AUTH_TOKEN` configuradas en las variables de entorno de Vercel.
 
-To learn more about Next.js, take a look at the following resources:
+## Puesta en marcha
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm install
+cp .env.example .env.local
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Comandos de base de datos: `npm run db:generate` (crear migración), `npm run db:migrate` (aplicarla), `npm run db:studio`.
