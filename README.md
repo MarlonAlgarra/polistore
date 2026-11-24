@@ -53,3 +53,6 @@ npm run dev
 ```
 
 Comandos de base de datos: `npm run db:generate` (crear migración), `npm run db:migrate` (aplicarla), `npm run db:studio`.
+
+Primera vez: `npm run db:migrate` y luego `npm run db:seed` (carga los 24 artículos del catálogo).
+Pruebas: `npm test` (Vitest). En producción define `SESSION_SECRET` (ver `.env.example`).

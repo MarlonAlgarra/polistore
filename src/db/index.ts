@@ -1,5 +1,5 @@
 import { createClient } from "@libsql/client";
-import { drizzle } from "drizzle-orm/libsql";
+import { drizzle, type LibSQLDatabase } from "drizzle-orm/libsql";
 import * as schema from "./schema";
 
 // Local: archivo SQLite (data/local.db). Producción en Vercel: base remota Turso (libSQL, compatible con SQLite).
@@ -8,4 +8,6 @@ const client = createClient({
   authToken: process.env.DATABASE_AUTH_TOKEN,
 });
 
-export const db = drizzle(client, { schema });
+export type Db = LibSQLDatabase<typeof schema>;
+
+export const db: Db = drizzle(client, { schema });

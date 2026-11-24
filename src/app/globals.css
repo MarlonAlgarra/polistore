@@ -5,7 +5,7 @@
   --brand-secondary: #3db2de;
   --brand-white: #ffffff;
 
-  --background: var(--brand-white);
+  --background: #f8fafc;
   --foreground: var(--brand-primary);
 }
 
@@ -23,4 +23,32 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Componentes base con la identidad visual del Poli */
+@layer components {
+  .card {
+    @apply rounded-2xl border border-primary/10 bg-white shadow-sm;
+  }
+  .input {
+    @apply w-full rounded-xl border border-primary/20 bg-white px-3 py-2 text-primary outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/40 aria-invalid:border-red-600;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 font-semibold text-white transition hover:bg-[#164d7a] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary disabled:opacity-60;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-full border-2 border-primary px-5 py-2 font-semibold text-primary transition hover:bg-primary hover:text-white;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center rounded-full px-3 py-2 text-sm font-semibold text-white transition hover:bg-white/10;
+  }
+  .qty-btn {
+    @apply size-10 text-xl font-bold text-primary hover:bg-sky-50 disabled:opacity-30;
+  }
+  .badge {
+    @apply rounded-full px-2.5 py-0.5 text-xs font-semibold;
+  }
+  .link {
+    @apply font-semibold text-[#1b6fa0] underline-offset-2 hover:underline;
+  }
 }
