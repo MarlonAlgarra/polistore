@@ -1,4 +1,0 @@
-# Paquetes autorizados a ejecutar scripts de instalación (pnpm los bloquea por defecto).
-# esbuild: binario que usa drizzle-kit para leer drizzle.config.ts y el esquema.
-allowBuilds:
-  esbuild: true
