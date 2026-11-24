@@ -46,10 +46,15 @@ Por eso usamos **libSQL**: mismo SQLite, pero con un servidor remoto gratuito ([
 
 ## Puesta en marcha
 
+El proyecto usa **pnpm** (no npm ni yarn). Si no lo tienes: `corepack enable` (la versión queda fijada en `packageManager` de `package.json`).
+
 ```bash
-npm install
+pnpm install
 cp .env.example .env.local
-npm run dev
+pnpm db:migrate
+pnpm dev
 ```
 
-Comandos de base de datos: `npm run db:generate` (crear migración), `npm run db:migrate` (aplicarla), `npm run db:studio`.
+Comandos de base de datos: `pnpm db:generate` (crear migración), `pnpm db:migrate` (aplicarla), `pnpm db:studio`.
+
+Los paquetes que pueden ejecutar scripts de instalación se autorizan en `pnpm-workspace.yaml` (`allowBuilds`).
